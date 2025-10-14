@@ -1,0 +1,24 @@
+# Sistema de Gestión de Biblioteca
+
+Una aplicación web simple para gestionar una biblioteca, construida con Spring Boot.
+
+## Características
+
+- ✅ Agregar nuevos libros
+- ✅ Listar todos los libros
+- ✅ Eliminar libros
+
+## 📋 Prerrequisitos
+
+- Java 17 o superior
+- Maven 3.6 o superior
+- Git
+
+## Ejecución Local
+
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/TestingUD-Gis/ProyectoBiblioteca.git
+cd biblioteca
+mvn clean spring-boot:run
+```

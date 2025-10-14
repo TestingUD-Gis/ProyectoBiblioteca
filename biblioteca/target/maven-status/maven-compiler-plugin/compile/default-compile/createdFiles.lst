@@ -1,0 +1,3 @@
+com\mcic\controllers\BibliotecaController.class
+com\mcic\models\Libro.class
+com\mcic\BibliotecaApp.class
