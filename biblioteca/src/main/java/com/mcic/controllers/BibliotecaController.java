@@ -16,8 +16,8 @@ import com.mcic.models.Libro;
 @Controller
 public class BibliotecaController {
 
-    private List<Libro> libros = new ArrayList<>();
-    private AtomicLong idCounter = new AtomicLong();
+    final private List<Libro> libros = new ArrayList<>();
+    final private AtomicLong idCounter = new AtomicLong();
 
     public BibliotecaController() {
         idCounter.set(1);
