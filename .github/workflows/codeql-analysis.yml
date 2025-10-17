@@ -31,7 +31,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'  # Cambie la versión si su proyecto usa otra
+          java-version: '17'  # Cambie si su proyecto usa otra versión
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
@@ -40,10 +40,12 @@ jobs:
 
       - name: Build project
         run: |
-          echo "Building Java project..."
-          ./mvnw clean compile -DskipTests || mvn clean compile -DskipTests
+          echo "Building Java project in biblioteca/ folder..."
+          cd biblioteca
+          mvn -B clean compile -DskipTests
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
+          category: "/language:${{ matrix.language }}"
           category: "/language:${{ matrix.language }}"
