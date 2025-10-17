@@ -37,13 +37,22 @@ jobs:
         with:
           languages: ${{ matrix.language }}
 
+      # 👇 Aquí el cambio clave: entrar en la ruta completa
       - name: Build project
-        working-directory: biblioteca
         run: |
-          echo "Building Java project inside biblioteca folder..."
+          echo "Building Java project inside ProyectoBiblioteca/biblioteca folder..."
+          cd ProyectoBiblioteca/biblioteca
           mvn -B clean compile -DskipTests
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:${{ matrix.language }}"
+
+      # (Opcional) Para repositorios privados, exportar resultados SARIF
+      - name: Upload SARIF as artifact (if private)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: codeql-results
+          path: /home/runner/work/ProyectoBiblioteca/results/java.sarif
