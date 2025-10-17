@@ -1,0 +1,49 @@
+name: "CodeQL Automatic Analysis (Java)"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Ejecutar análisis automático cada 3 días a las 3:00 a.m.
+    - cron: '0 3 */3 * *'
+
+jobs:
+  analyze:
+    name: Run CodeQL Analysis for Java
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'java' ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'  # Cambie la versión si su proyecto usa otra
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Build project
+        run: |
+          echo "Building Java project..."
+          ./mvnw clean compile -DskipTests || mvn clean compile -DskipTests
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
