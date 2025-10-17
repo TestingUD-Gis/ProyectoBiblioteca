@@ -1,4 +1,4 @@
-name: "CodeQL Automatic Analysis (Java)"
+nname: "CodeQL Automatic Analysis (Java)"
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    - cron: '0 3 */3 * *' # Cada 3 días a las 3:00 a.m.
+    # Ejecutar análisis automático cada 10 minutos
+    - cron: '*/10 * * * *'
 
 jobs:
   analyze:
@@ -37,7 +38,6 @@ jobs:
         with:
           languages: ${{ matrix.language }}
 
-      # ✅ Cambiado: entrar solo a 'biblioteca', no a 'ProyectoBiblioteca/biblioteca'
       - name: Build project
         working-directory: biblioteca
         run: |
@@ -49,7 +49,6 @@ jobs:
         with:
           category: "/language:${{ matrix.language }}"
 
-      # (Opcional) exportar resultados si es privado
       - name: Upload SARIF as artifact (if private)
         if: always()
         uses: actions/upload-artifact@v4
