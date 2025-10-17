@@ -7,7 +7,7 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: 'Bibliotecadigital'
-  POM_XML_DIRECTORY: '.'
+  POM_XML_DIRECTORY: 'biblioteca'
   JAVA_VERSION: '17'
   DISTRIBUTION: 'temurin'
 
@@ -27,10 +27,12 @@ jobs:
 
     - name: Build with Maven
       run: |
+        cd ${{ env.POM_XML_DIRECTORY }}
         mvn clean package -DskipTests
 
     - name: Run tests
       run: |
+        cd ${{ env.POM_XML_DIRECTORY }}
         mvn test
 
     - name: Deploy to Azure WebApp
