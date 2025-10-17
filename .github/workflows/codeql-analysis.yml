@@ -6,8 +6,7 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    # Ejecutar análisis automático cada 3 días a las 3:00 a.m.
-    - cron: '0 3 */3 * *'
+    - cron: '0 3 */3 * *' # Cada 3 días a las 3:00 a.m.
 
 jobs:
   analyze:
@@ -31,7 +30,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'  # Cambie si su proyecto usa otra versión
+          java-version: '17'
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
@@ -39,13 +38,12 @@ jobs:
           languages: ${{ matrix.language }}
 
       - name: Build project
+        working-directory: biblioteca
         run: |
-          echo "Building Java project in biblioteca/ folder..."
-          cd biblioteca
+          echo "Building Java project inside biblioteca folder..."
           mvn -B clean compile -DskipTests
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          category: "/language:${{ matrix.language }}"
           category: "/language:${{ matrix.language }}"
